@@ -207,7 +207,14 @@ gulp.task('nunjucks', () => {
 		.pipe($.htmlhint.reporter());
 
 	if (argv.minifyHtml) {
-		nunjucks = nunjucks.pipe($.htmlmin({collapseWhitespace: true}));
+		nunjucks = nunjucks.pipe($.htmlmin({
+			collapseWhitespace: true,
+			collapseBooleanAttributes: true,
+			conservativeCollapse: true,
+			removeCommentsFromCDATA: true,
+			removeEmptyAttributes: true,
+			removeRedundantAttributes: true,
+		}));
 	}
 
 	nunjucks.pipe(gulp.dest('build'));
