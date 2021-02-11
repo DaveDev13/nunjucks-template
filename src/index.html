@@ -1,11 +1,7 @@
 {% extends "src/nunjucks/base.njk" %}
 
-{% set baseDir = '../' %}
-{% set title = 'Base Template' %}
-
 {% block head %}
-	{{ meta | metadata('title', 'Base Template') }}
-	{{ meta | metadata('viewport', 'width=device-width') }}
+	{{ meta | metadata('description', 'Base Template') }}
 {% endblock %}
 
 {% block body %}

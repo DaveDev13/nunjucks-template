@@ -4,7 +4,11 @@ let yargs = require('yargs');
 let path = require('path');
 let del = require('del');
 let webpackConfig = require('./webpack.config');
-let data = require('./src/data.json');
+const req = require('./src/nunjucks/data.json');
+let data = {
+	now: new Date().getMinutes().toString(),
+	...req,
+};
 
 let errorHandler;
 
@@ -14,7 +18,6 @@ let argv = yargs.default({
 	fix: false,
 	minifyHtml: null,
 	minifyCss: null,
-	minifyJs: null,
 	minifySvg: null,
 	notify: true,
 	open: true,
@@ -26,7 +29,6 @@ let argv = yargs.default({
 argv.minify = !!argv.minify;
 argv.minifyHtml = argv.minifyHtml !== null ? !!argv.minifyHtml : argv.minify;
 argv.minifyCss = argv.minifyCss !== null ? !!argv.minifyCss : argv.minify;
-argv.minifyJs = argv.minifyJs !== null ? !!argv.minifyJs : argv.minify;
 argv.minifySvg = argv.minifySvg !== null ? !!argv.minifySvg : argv.minify;
 
 if (argv.ci) {
@@ -34,6 +36,7 @@ if (argv.ci) {
 	argv.notify = false;
 	argv.open = false;
 	argv.throwErrors = true;
+	argv.minifyHtml = true;
 
 	webpackConfig.mode = 'production';
 } else {
@@ -47,7 +50,6 @@ let $ = gulpLoadPlugins({
 		'browser-sync',
 		'connect-history-api-fallback',
 		'cssnano',
-		'emitty',
 		'imagemin-mozjpeg',
 		'merge-stream',
 		'postcss-reporter',
@@ -180,7 +182,7 @@ const manageEnvironment = (environment) => {
 };
 
 gulp.task('nunjucks', () => {
-	return gulp.src([
+	let nunjucks = gulp.src([
 		'src/[^_]*.+(html|nunjucks|njk)',
 		'src/pages/**/[^_]*.+(html|nunjucks|njk)',
 	])
@@ -190,20 +192,27 @@ gulp.task('nunjucks', () => {
 		.pipe($.if(argv.debug, $.debug()))
 		.pipe($.nunjucksRender({
 			manageEnv: manageEnvironment,
-			data: {
-				data,
-				noCache: true,
-				tags: {
-					blockStart: '<%',
-					blockEnd: '%>',
-					variableStart: '<$',
-					variableEnd: '$>',
-					commentStart: '<#',
-					commentEnd: '#>',
-				},
+			data,
+			noCache: true,
+			tags: {
+				blockStart: '<%',
+				blockEnd: '%>',
+				variableStart: '<$',
+				variableEnd: '$>',
+				commentStart: '<#',
+				commentEnd: '#>',
 			},
 		}))
-		.pipe(gulp.dest('build'));
+		.pipe($.htmlhint('.htmlhintrc'))
+		.pipe($.htmlhint.reporter());
+
+	if (argv.minifyHtml) {
+		nunjucks = nunjucks.pipe($.htmlmin({collapseWhitespace: true}));
+	}
+
+	nunjucks.pipe(gulp.dest('build'));
+
+	return nunjucks;
 });
 
 gulp.task('scss', () => {
@@ -252,12 +261,8 @@ gulp.task('js', () => {
 		.pipe(gulp.dest(webpackConfig.output.path));
 });
 
-gulp.task('lint:nunjucks', () => {
-	return gulp.src([
-		'src/[^_]*.+(html|nunjucks|njk)',
-		'src/nunjucks/**/[^_]*.+(html|nunjucks|njk)',
-		'src/pages/**/[^_]*.+(html|nunjucks|njk)',
-	])
+gulp.task('lint:html', () => {
+	return gulp.src('build/**/*.html')
 		.pipe($.plumber({
 			errorHandler,
 		}))
@@ -379,8 +384,8 @@ gulp.task('watch', () => {
 
 	gulp.watch([
 		'src/*.+(html|nunjucks|njk)',
-		'src/nunjucks/**/[^_]*.+(html|nunjucks|njk)',
-		'src/pages/**/*.+(html|nunjucks|njk)',
+		'src/nunjucks/**/[^_]*.+(html|nunjucks|njk|json)',
+		'src/pages/**/*.+(html|nunjucks|njk|json)',
 	], gulp.series('nunjucks'));
 
 	gulp.watch('src/scss/**/*.scss', gulp.series('scss'));
@@ -468,9 +473,10 @@ gulp.task('share', () => {
 });
 
 gulp.task('lint', gulp.series(
-	'lint:nunjucks',
+	'lint:html',
 	'lint:scss',
 	'lint:js',
+	'validate:html',
 ));
 
 gulp.task('build', gulp.series(

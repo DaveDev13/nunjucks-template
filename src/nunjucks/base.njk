@@ -105,7 +105,7 @@
 		{%- include "./partials/meta.njk" %}
 		{%- include "./partials/links.njk" %}
 
-		<link rel="stylesheet" href="{{baseDir + 'css/main.css'}}"/>
+		<link rel="stylesheet" href="{{baseDir + 'css/main.css?v=' + now}}"/>
 
 		{%- block styles %}{% endblock -%}
 
@@ -122,8 +122,8 @@
 		<!-- END content -->
 
 		<!-- BEGIN scripts -->
-		<script type="text/javascript" src="{{baseDir + 'js/vendor.js'}}"></script>
-		<script type="text/javascript" src="{{baseDir + 'js/main.js'}}"></script>
+		<script src="{{baseDir + 'js/vendor.js?v=' + now}}"></script>
+		<script src="{{baseDir + 'js/main.js?v=' + now}}"></script>
 		{%- block js %}{% endblock -%}
 		<!-- END scripts -->
 		{%- include "./partials/analytics/yandex.njk" -%}

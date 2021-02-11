@@ -1,10 +1,10 @@
 {
-	"name": "ninelines-template",
-	"version": "2.7.11",
+	"name": "nunjucks-template",
+	"version": "0.1.0",
 	"description": "Шаблон для разработки сайтов",
 	"scripts": {},
-	"author": "Dmitry Artemov <d.artemov@9-lines.com>",
-	"license": "ISC",
+	"author": "Denis Kobelev | DaveDev <deniskobeleff@yandex.ru>",
+	"license": "MIT",
 	"devDependencies": {
 		"@babel/core": "7.10.4",
 		"@babel/plugin-proposal-class-properties": "7.10.4",
@@ -26,6 +26,8 @@
 		"gulp-bootlint": "1.1.0",
 		"gulp-debug": "4.0.0",
 		"gulp-eslint": "6.0.0",
+		"gulp-htmlhint": "4.0.0",
+		"gulp-htmlmin": "5.0.1",
 		"gulp-if": "3.0.0",
 		"gulp-imagemin": "7.1.0",
 		"gulp-load-plugins": "2.0.3",
@@ -63,7 +65,6 @@
 	},
 	"dependencies": {
 		"@babel/polyfill": "7.10.4",
-		"jquery": "3.5.1",
 		"ninelines-ua-parser": "1.1.6",
 		"normalize.css": "8.0.1",
 		"svg4everybody": "2.1.9"
@@ -76,6 +77,6 @@
 	"lint-staged": {
 		"*.js": "eslint --color --fix",
 		"*.{css,scss}": "stylelint --color",
-		"*.{html,njk,nunjucks}": "pug-bootlint"
+		"*.{html}": "bootlint --color --fix"
 	}
 }
