@@ -203,7 +203,7 @@ gulp.task('nunjucks', () => {
 				commentEnd: '#>',
 			},
 		}))
-		.pipe($.htmlhint('.htmlhintrc'))
+		.pipe($.htmlhint('.htmlhint.json'))
 		.pipe($.htmlhint.reporter());
 
 	if (argv.minifyHtml) {
