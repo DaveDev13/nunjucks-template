@@ -13,3 +13,11 @@ $easing-back-out: cubic-bezier(0.25, 0.74, 0.22, 1.1); // http://cubic-bezier.co
 $easing-back-in: cubic-bezier(0.47, -0.1, 0.5, -0.06); // http://cubic-bezier.com/#.47,-0.1,.5,-.06
 $easing-out: ease-out;
 $easing-in: ease-in;
+
+// Settings
+$desktop: 1025;
+$desktop-xl: 1920;
+$laptop: 1200;
+$tablet: 768;
+$mobile: 320;
+$desktop-vh: 750;
