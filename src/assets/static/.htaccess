@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# правило перенаправления "с www" на "без www"
+# RewriteCond %{HTTP_HOST} ^www\.our-site\.ru$
+# RewriteRule ^(.*)$ http://our-site.ru/$1 [R=301,L]
+
+# правило перенаправления "с /" на "без /"
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+
+DirectoryIndex index.php index.html index.htm index.cgi

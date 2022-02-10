@@ -1,0 +1,251 @@
+<!--htmlhint alt-require:false,tag-pair:false -->
+{#
+    Реализация Nunjucks для макросов изображений
+#}
+{% from 'layouts/macros/html-attributes.njk' import htmlAttributes %}
+
+{#
+    Вывод невидимого SVG в данные URL, определенной ширины и высоты
+
+    Следует использовать, когда элементы изображения должны быть определенной ширины/высоты
+    сохраняя соотношения сторон до загрузки фактического изображения с отложенной загрузкой
+
+    Пример
+        <img src="{{ dataURISVG(200, 100)" alt="" />
+#}
+
+{% macro dataURISVG (width, height) -%}
+    {%- if width and height -%}
+        {%- set uri = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="' ~ width ~ '" height="' ~ height ~ '" preserveAspectRatio="xMinYMax meet" viewBox="0 0 ' ~ width ~ ' ' ~ height ~ '"></svg>' %}
+
+        {#- Кодирование для проверки W3C #}
+        {%- set uri = uri|replace('<', '%3C') %}
+        {%- set uri = uri|replace('>', '%3E') %}
+        {%- set uri = uri|replace(' ', '%20') %}
+        {%- set uri = uri|replace('"', '%22') %}
+        {{- uri }}
+    {%- endif -%}
+{%- endmacro %}
+
+{#
+    Макрос для ленивой загрузки изображений
+    Для отложенной загрузки требуется плагин "lazy"
+
+    Вставляет SVG данные в URL как "src", если указаны атрибуты "width" и "height",
+    это необходимо для сохранения соотношения сторон элемента <img /> перед загрузкой изображения
+
+    Вставляет <noscript> для отображения одного изображения, когда пользователь отключил JS
+
+    Дополнительные параметры, которые могут быть переданы в аргумент HTML_ATTRIBUTES:
+    lazy (boolean) - включить отложенную загрузку с помощью плагина "lazy", по умолчанию значение true
+    safe (boolean) - атрибут "safe" следует использовать ТОЛЬКО для шаблонов на стороне клиента, где URL-адрес уже экранирован в JSON
+
+    Использование:
+        {{ lazyImage(IMAGE_SOURCE, HTML_ATTRIBUTES) }}
+
+    Пример:
+        {{ lazyImage('assets/filePath/fileName.extantion', {
+            'width': 200,
+            'height': 100,
+            'alt': 'image'
+        }) }}
+
+    Пример с отключенной отложенной загрузкой изображения отображаются мгновенно:
+        {{ lazyImage('assets/filePath/fileName.extantion', {
+            'width': 200,
+            'height': 100,
+            'alt': 'image',
+            'lazy': false})
+        }}
+#}
+
+{% macro lazyImage(src, attrs) %}
+    {% set lazy = attrs.lazy | default(true) %}
+
+    <img class="{{ attrs.class|default('') }}"
+        {% if not attrs.alt %}alt=""{% endif %}
+        draggable="false"
+        {% if lazy %}
+            {{ htmlAttributes( attrs|omit(['class', 'safe', 'lazy']) ) }}
+
+            src="{{- dataURISVG(attrs.width, attrs.height) -}}"
+
+            {% if attrs.safe %}data-src="{{ src|safe }}"{% else %}data-src="{{ src }}"{% endif %}
+        {% else %}
+            {{ htmlAttributes( attrs|omit(['class', 'safe', 'lazy']) ) }}
+
+            {% if attrs.safe %}src="{{ src|safe }}"{% else %}src="{{ src }}"{% endif %}
+        {% endif %}
+/>
+
+    {% if lazy %}
+        <noscript>
+            {%- set attrs = {}|merge(attrs)|merge({
+                'lazy': false
+            }) %}
+
+            {{ lazyImage(src, attrs)}}
+        </noscript>
+    {% endif %}
+{% endmacro %}
+
+{#
+    Макрос для ленивой загрузки изображений элемента picture
+    Для отложенной загрузки требуется плагин "lazy"
+
+    Вставляет SVG данные в URL как "src", если указаны атрибуты "width" и "height",
+    это необходимо для сохранения соотношения сторон элемента <img /> перед загрузкой изображения
+
+    Вставляет <noscript> для отображения одного изображения, когда пользователь отключил JS
+
+    Дополнительные параметры, которые могут быть переданы в аргумент HTML_ATTRIBUTES:
+    lazy (boolean) - включить отложенную загрузку с помощью плагина "lazy", по умолчанию значение true
+
+    Использование:
+        {{ lazyPicture(IMAGE_DEFINITIONS, HTML_ATTRIBUTES) }}
+
+    Пример:
+        {{ lazyPicture({[
+            'assets/filePath/fileName.extantion',
+            'assets/filePath/fileName.extantion',
+            'assets/filePath/fileName.extantion'
+        ]}) }}
+
+    Пример с одинаковым соотношением ширины и высоты для всех изображений:
+        {{ lazyPicture({[
+            'assets/filePath/fileName.extantion',
+            'assets/filePath/fileName.extantion',
+            'assets/filePath/fileName.extantion'
+        ]}, {
+            'width': 400,
+            'height': 300,
+            'alt': 'images'¡
+        }) }}
+
+    Пример с различным соотношением ширины и высоты для всех изображений:
+        {{ lazyPicture({[
+            {'src': 'assets/filePath/fileName.extantion', 'width': 400, 'height': 300},
+            {'src': 'assets/filePath/fileName.extantion', 'width': 500, 'height': 300},
+            {'src': 'assets/filePath/fileName.extantion', 'width': 600, 'height': 300}
+        ]}, {
+            'alt': 'image'
+        }) }}
+
+    Пример с отключенной отложенной загрузкой изображения отображаются мгновенноy
+        {{ lazyPicture({[
+            'assets/filePath/fileName.extantion',
+            'assets/filePath/fileName.extantion',
+            'assets/filePath/fileName.extantion'
+        ]}, {
+            'lazy': false,
+            'alt': 'picture'
+        }) }}
+
+    Retina пример:
+        {{ lazyPicture({
+            'assets/filePath/fileName.@2x.extantion 2x, assets/filePath/fileName.extantion 1x',
+        }), {
+            'fallback': 'assets/filePath/fileName.extantion'
+        } }}
+#}
+
+{% macro lazyPictureSource (src, lazy) -%}
+    {%- if lazy and src.width and src.height -%}
+        <source data-srcset="{{ src.src }}" srcset="{{ dataURISVG(src.width, src.height) }}" {% if src.media %}media="{{ src.media }}"{% endif %} {% if src.type %}type="{{ src.type }}"{% endif %}/>
+    {%- elseif src.src -%}
+        <source {% if lazy %} data-{% endif %}srcset="{{ src.src }}" {% if src.media %}media="{{ src.media }}"{% endif %} {% if src.type %}type="{{ src.type }}"{% endif %}/>
+    {%- else -%}
+        <source {% if lazy %} data-{% endif %}srcset="{{ src }}" {% if src.media %}media="{{ src.media }}"{% endif %} {% if src.type %}type="{{ src.type }}"{% endif %}/>
+    {%- endif -%}
+{% endmacro %}
+
+{%- macro lazyPicture(src, attrs) -%}
+    {% set lazy = attrs.lazy | default(true) %}
+
+    <picture class="{{ attrs.class|default('') }}"
+        {{- htmlAttributes( attrs|omit(['class', 'img', 'width', 'height']) ) -}}
+        draggable="false"
+    >
+        {%- set baseSrc = src -%}
+
+        {%- if src.fallback|default(false) or src.xs|default(false) or src.sm|default(false) or src.md|default(false) or src.lg|default(false) or src.xl|default(false) or src.xxl|default(false) -%}
+            {%- set baseSrc = src.fallback|default(src.xs)|default(src.sm)|default(src.md)|default(src.lg)|default(src.xl)|default(src.xxl) -%}
+
+            {%- if src.xxl|default(false) and src.xxl != baseSrc %}
+                {{ lazyPictureSource(src.xxl, '(min-width: 1440px) and (min-height: 600px)') }}
+            {%- endif %}
+            {%- if src.xl|default(false) and src.xl != baseSrc %}
+                {{ lazyPictureSource(src.xl, '(min-width: 1025px) and (min-height: 600px)') }}
+            {%- endif %}
+            {%- if src.lg|default(false) and src.lg != baseSrc %}
+                {{ lazyPictureSource(src.lg, '(min-width: 980px)') }}
+            {%- endif %}
+            {%- if src.md|default(false) and src.md != baseSrc %}
+                {{ lazyPictureSource(src.md, '(min-width: 568px) and (max-aspect-ratio: 13 / 9), only screen and (min-width: 668px) and (min-height: 416px), only screen and (min-width: 980px)') }}
+            {%- endif %}
+            {%- if src.sm|default(false) and src.sm != baseSrc %}
+                {{ lazyPictureSource(src.sm, '(min-width: 568px), (min-aspect-ratio: 13 / 9)') }}
+            {%- endif %}
+            {%- if src.xs|default(false) and src.xs != baseSrc %}
+                {{ lazyPictureSource(src.xs, '') }}
+            {%- endif %}
+        {%- endif -%}
+
+        <img
+            {% if baseSrc | isString %}
+                {# baseSrc is an url string #}
+                {%- if lazy %}
+                    data-srcset="{{ baseSrc }}"
+                {%- else %}
+                    srcset="{{ baseSrc }}"
+                {%- endif %}
+            {% elseif baseSrc[0].src %}
+                {# baseSrc is an object with 'src', 'width' and 'height' #}
+                {%- if lazy %}
+                    data-srcset="{{ baseSrc[0].src }}"
+                    src="{{- dataURISVG(baseSrc[0].width|default(attrs.width)|default(false), baseSrc[0].height|default(attrs.height)|default(false)) -}}"
+                {%- else %}
+                    srcset="{{ baseSrc[0].src }}"
+                {%- endif %}
+            {% endif %}
+
+            {%- if not attrs.img|default(false) or not attrs.img.alt|default(false) %}
+                alt=""
+            {% endif %}
+
+            {{- htmlAttributes( attrs|pick(['width', 'height']) ) }}
+
+            {%- if attrs.img|default(false) %}
+                class="{{ attrs.img.class|default('') }}"
+                {{ htmlAttributes(attrs.img|omit(['class'])) }}
+            {%- else %}
+                class="{{ attrs.img.class|default('') }}"
+            {% endif %}
+            draggable="false"
+        />
+
+        {%- if lazy %}
+            <noscript>
+                <img
+                    {% if baseSrc | isString %}
+                        {# baseSrc is an url string #}
+                        src="{{ baseSrc }}"
+                    {% elseif baseSrc[0].src %}
+                        {# baseSrc is an object with 'src', 'width' and 'height' #}
+                        src="{{ baseSrc[0].src }}"
+                    {% endif %}
+
+                    {%- if not attrs.img|default(false) or not attrs.img.alt|default(false) %}
+                        alt=""
+                    {% endif %}
+
+                    {{- htmlAttributes( attrs|pick(['width', 'height']) ) }}
+
+                    {%- if attrs.img|default(false) %}
+                        {{ htmlAttributes(attrs.img) }}
+                    {% endif %}
+                />
+            </noscript>
+        {% endif %}
+    </picture>
+{%- endmacro -%}

@@ -1,0 +1,53 @@
+.home {
+    padding: vc(80) vc(20);
+
+    &__picture {
+        display: block;
+        margin: 0 auto vc(40);
+        max-width: vc(500);
+        opacity: 0;
+        transition: $duration-normal;
+
+        &[data-loaded="true"] {
+            opacity: 1;
+        }
+
+        &--2 {
+            margin-top: vc(40);
+            margin-bottom: 0;
+        }
+    }
+
+    &__title {
+        margin: 0 auto;
+        max-width: vc(800);
+        font-size: vc(40);
+        line-height: vc(36);
+        text-align: center;
+    }
+
+    &__text {
+        margin: 0 auto;
+        max-width: vc(500);
+        font-size: vc(20);
+        line-height: vc(26);
+        text-align: center;
+
+        a {
+            text-decoration: underline;
+
+            @include hover {
+                text-decoration: none;
+            }
+        }
+
+        code {
+            padding: vc(5);
+            background-color: $color-light;
+        }
+    }
+
+    @include desktop {
+        padding: vc(100) 0;
+    }
+}

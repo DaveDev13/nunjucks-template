@@ -1,0 +1,41 @@
+<main class="home">
+    {{ lazyPicture(
+        {
+            xs: {
+                src: asset('/assets/images/intro/mem-${lang}.jpg'),
+                alt: 'image 0',
+                width: '1340px',
+                height: '882px'
+            },
+            fallback: asset('/assets/images/intro/mem-${lang}.jpg')
+        }, {
+            img: {
+                alt: 'image'
+            },
+            class: 'home__picture js-lazy',
+            id: 'hello'
+        }
+    ) | format | safe }}
+
+    <h1 class="home__title">{{ data[lang].intro.title }}</h1>
+    <p class="home__text" id="necessarily">{{ data[lang].intro.text | safe }}</p>
+
+    {{ lazyPicture(
+        {
+            xs: {
+                src: asset('/assets/images/intro/mem-2.jpg'),
+                alt: 'image 0',
+                width: '1340px',
+                height: '882px'
+            },
+            fallback: asset('/assets/images/intro/mem-2.jpg')
+        },
+        {
+            img: {
+                alt: 'image'
+            },
+            class: 'home__picture home__picture--2 js-lazy',
+            id: 'bye'
+        }
+    )}}
+</main>

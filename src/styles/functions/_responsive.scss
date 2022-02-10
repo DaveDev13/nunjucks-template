@@ -1,0 +1,32 @@
+@use "sass:math";
+
+// адаптивные стили через vw
+@function vw($value, $base: $laptop) {
+    @return math.div($value, $base) * 100vw;
+}
+
+// обычные пиксельные стили
+@function px($value, $base: $laptop) {
+    @return math.div($value * ($desktop-xl * 1px), $base);
+}
+
+// vh - для адаптации стилей под высоту страницы
+@function vh($value, $base: $desktop-vh) {
+    @return math.div($value, $base) * 100vh;
+}
+
+// vmin - для мобильных устройств
+@function vm($value, $base: $mobile) {
+    @return math.div($value, $base) * 100vmin;
+}
+
+// vmin - для планшетных устройств
+@function vt($value, $base: $tablet) {
+    @return math.div($value, $base) * 100vmin;
+}
+
+// адаптивные стили через vc
+// при этом не нужно в каждом конкретном стиле пересоздавать условия для резины и статики
+@function vc($value) {
+    @return calc(#{$value} * var(--width-multiplier));
+}

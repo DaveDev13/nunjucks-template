@@ -1,0 +1,46 @@
+{
+    "data": {
+        "ru": {
+            "header": {
+                "links": {
+                    "logo": "/"
+                },
+                "email": "hello@davedev.ru",
+                "menu": [
+                    {
+                        "url": "/en",
+                        "name": "Английская версия"
+                    }
+                ]
+            },
+            "footer": {
+                "copyright": "Девять линий"
+            },
+            "intro": {
+                "title": "Это стартовый шаблон для верстки!",
+                "text": "<br><br>Не используемые части кода/компонентов можно просто отключить (удалять не рекомендуется)<br> <br>"
+            }
+        },
+        "en": {
+            "header": {
+                "links": {
+                    "logo": "/en"
+                },
+                "email": "hello@davedev.ru",
+                "menu": [
+                    {
+                        "url": "/",
+                        "name": "Russian version"
+                    }
+                ]
+            },
+            "footer": {
+                "copyright": "Nine lines"
+            },
+            "intro": {
+                "title": "This is the starting template for layout!",
+                "text": "<br><br>Unused parts of the code/components can simply be disabled (it is not recommended to delete)<br> <br>"
+            }
+        }
+    }
+}

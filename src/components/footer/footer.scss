@@ -1,0 +1,17 @@
+.footer {
+    display: flex;
+    margin-top: auto;
+    padding: vc(20) vc(30);
+    width: 100%;
+
+    &__developer {
+        margin-left: auto;
+        font-size: vc(12);
+        line-height: vc(16);
+    }
+
+    &__copy {
+        font-size: vc(12);
+        line-height: vc(16);
+    }
+}

@@ -1,0 +1,40 @@
+<!--htmlhint tag-pair:false -->
+{% set lang = 'ru' %}
+{% from 'layouts/macros/helpers.njk' import icon %}
+{% from 'layouts/macros/image.njk' import lazyImage, lazyPicture %}
+{% extends 'layouts/base.njk' %}
+
+{% set title = 'Новое название проекта' %}
+{% set description = 'Описание проекта' %}
+
+{% set headerLogo = 'white' %}
+{% set htmlAttrs = {
+    'custom': true
+} %}
+{% set htmlClassName = ['test'] %}
+
+{% block body %}
+    {% include 'components/header/header.njk' %}
+    {% include 'components/intro/intro.njk' %}
+    {% include 'components/footer/footer.njk' %}
+{% endblock %}
+
+{% block styles %}
+    {# для теста можно посмотреть как будет генерироваться хеш в урле #}
+    {# <link rel="stylesheet" href="{{ asset("/assets/styles/landing.css") }}"/> #}
+{% endblock %}
+
+{% block scripts %}
+    {# для теста можно посмотреть как будет генерироваться хеш в урле #}
+    {# <script src="{{ asset("/assets/scripts/landing.js") }}"></script> #}
+{% endblock %}
+
+{% block preHeadScripts %}
+    {# для теста можно посмотреть как будет генерироваться хеш в урле #}
+    {# <script src="{{ asset("/assets/scripts/landing.js") }}"></script> #}
+{% endblock %}
+
+{% block preBodyScripts %}
+    {# для теста можно посмотреть как будет генерироваться хеш в урле #}
+    {# <script src="{{ asset("/assets/scripts/landing.js") }}"></script> #}
+{% endblock %}

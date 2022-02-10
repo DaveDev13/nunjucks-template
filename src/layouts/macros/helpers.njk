@@ -1,0 +1,86 @@
+<!--htmlhint tag-pair:false -->
+{% from 'layouts/macros/html-attributes.njk' import htmlAttributes %}
+
+{#
+    Макрос для вывода svg-значка из спрайта
+    Удаляются пробелы, используя {%- и -%} только для того, чтобы хорошо выглядело
+    в предварительном просмотре кода, это не имеет никакого другого значения
+
+    Использование:
+        {{ icon('ICON_FILENAME_WITHOUT_EXTENSION', {'width': WIDTH_AS_IN_SVG_FILE, 'height': HEIGHT_AS_IN_SVG_FILE}) }}
+
+    Пример:
+        {{ icon('arrow-down', {'width': 20, 'height': 20}) }}
+#}
+
+{% macro icon(name, attrs) %}
+    {%- set filename = asset('/assets/svg-sprites/svg-sprites.svg') %}
+    {%- set width = 0 %}
+    {%- set height = 0 %}
+    {%- set style = '' %}
+    {%- set class = '' %}
+    {%- set viewBox = '' %}
+    {%- set preserveAspectRatio = '' %}
+
+    {%- if attrs %}
+        {%- set filename = attrs.source|default(filename) %}
+        {%- set width = attrs.width|default(width) %}
+        {%- set height = attrs.height|default(height) %}
+        {%- set style = attrs.style|default(style) %}
+        {%- set class = attrs.class|default(class) %}
+        {%- set viewBox = attrs.viewBox|default(viewBox) %}
+        {%- set preserveAspectRatio = attrs.preserveAspectRatio|default(preserveAspectRatio) %}
+    {%- endif -%}
+
+    <svg class="icon icon-{{ name }}{% if class %} {{ class }}{% endif %}"
+        {%- if width %} width="{{ width }}"{% endif -%}
+        {%- if height %} height="{{ height }}"{% endif -%}
+        {%- if style %} style="{{ style }}"{% endif -%}
+        {%- if viewBox %} viewBox="{{ viewBox }}"{% endif -%}
+        {%- if preserveAspectRatio %} preserveAspectRatio="{{ preserveAspectRatio }}"{% endif -%}
+        {%- if true %} role="presentation"{% endif -%}
+    >
+        <use href="{{ filename }}#{{ name }}" xlink:href="{{ filename }}#{{ name }}"></use>
+    </svg>
+{%- endmacro %}
+
+{#
+    Макрос для вывода видео
+
+    Пример:
+        {{ video({
+            'mp4': 'assets/filePath/fileName.mp4',
+            'webm': 'assets/filePath/fileName.webm',
+            'ogv': 'assets/filePath/fileName.ogv',
+            'm3u8': 'assets/filePath/fileName.m3u8',
+            'poster': 'assets/filePath/fileName.jpg'
+        }, {
+            'width': 640,
+            'height': 480
+        }) }}
+#}
+
+{% macro video(url, attrs) %}
+    <video
+        {{- htmlAttributes(attrs) }}
+        {% if url.poster|default(false) %}poster="{{ url.poster }}"{% endif %}
+    >
+        {% if url.mp4 | default(false) %}<source src="{{ url.mp4 }}" type="video/mp4"/>{% endif %}
+        {% if url.webm | default(false) %}<source src="{{ url.webm }}" type="video/webm"/>{% endif %}
+        {% if url.ogv | default(false) %}<source src="{{ url.ogv }}" type="video/ogg"/>{% endif %}
+        {% if url.m3u8 | default(false) %}<source src="{{ url.m3u8 }}" type="application/x-mpegURL"/>{% endif %}
+    </video>
+{% endmacro %}
+
+{# Макрос вывода для фонового видео #}
+{% macro backgroundVideo(url, attrs) %}
+    {%- set attrs = {
+        'muted': true,
+        'playsinline': true,
+        'loop': true,
+        'disablepictureinpicture': true,
+        'data-plugin': 'videoAutoPlay'
+    } | merge(attrs) %}
+
+    {{- video(url, attrs) -}}
+{% endmacro %}

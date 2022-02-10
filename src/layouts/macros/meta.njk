@@ -1,0 +1,156 @@
+<!--htmlhint tag-pair:false -->
+{% macro meta(title, description, keywords, image, metatags) -%}
+    {% if metatags.og and (title or description or image) %}
+        {% if metatags.og.type and (metatags.og.url or metatags.og.title or metatags.og.description or metatags.og.image) %}
+            <meta property="og:type" content="{{ metatags.og.type }}">
+        {% endif %}
+        {% if metatags.og.url %}
+            <meta property="og:url" content="{{ metatags.og.url }}">
+        {% endif %}
+        {% if metatags.og.Locale and (metatags.og.url or metatags.og.title or metatags.og.description or metatags.og.image) %}
+            <meta property="og:locale" content="{{ metatags.og.Locale }}">
+        {% endif %}
+        {% if metatags.og.title or title %}
+            {%- if metatags.og.title -%}
+                {% set content = metatags.og.title %}
+            {% else %}
+                {% set content = title %}
+            {%- endif -%}
+            <meta property="og:title" content="{{ content }}">
+        {% endif %}
+        {% if metatags.og.description or description %}
+            {%- if metatags.og.description -%}
+                {% set content = metatags.og.description %}
+            {% else %}
+                {% set content = description %}
+            {%- endif -%}
+            <meta property="og:description" content="{{ content }}">
+        {% endif %}
+        {% if metatags.og.image or image %}
+            {%- if metatags.og.image -%}
+                {% set content = metatags.og.image %}
+            {% else %}
+                {% set content = image %}
+            {%- endif -%}
+            {% set srcPath = asset(content, false) %}
+            <meta property="og:image" content="{{ srcPath }}">
+        {% endif %}
+        {% if metatags.og.image.type and metatags.og.image %}
+            <meta property="og:image:type" content="{{ metatags.og.image.type }}">
+        {% endif %}
+        {% if metatags.og.image.width and metatags.og.image %}
+            <meta property="og:image:width" content="{{ metatags.og.image.width }}">
+        {% endif %}
+        {% if metatags.og.image.height and metatags.og.image %}
+            <meta property="og:image:height" content="{{ metatags.og.image.height }}">
+        {% endif %}
+        {% if metatags.og.image.alt and metatags.og.image %}
+            <meta property="og:image:alt" content="{{ metatags.og.image.alt }}">
+        {% endif %}
+    {% endif %}
+
+    {% if metatags.twitter %}
+        {% if metatags.twitter.card and (metatags.twitter.site or metatags.twitter.creator or metatags.twitter.title or metatags.twitter.description or metatags.twitter.image) %}
+            <meta property="twitter:card" content="{{ metatags.twitter.card }}">
+        {% endif %}
+        {% if metatags.twitter.site %}
+            <meta property="twitter:site" content="{{ metatags.twitter.site }}">
+        {% endif %}
+        {% if metatags.twitter.creator %}
+            <meta property="twitter:creator" content="{{ metatags.twitter.creator }}">
+        {% endif %}
+        {% if metatags.twitter.title or title %}
+            {%- if metatags.og.title -%}
+                {% set content = metatags.og.title %}
+            {% else %}
+                {% set content = title %}
+            {%- endif -%}
+            <meta property="twitter:title" content="{{ content }}">
+        {% endif %}
+        {% if metatags.twitter.description or description %}
+            {%- if metatags.twitter.description -%}
+                {% set content = metatags.twitter.description %}
+            {% else %}
+                {% set content = description %}
+            {%- endif -%}
+            <meta property="twitter:description" content="{{ content }}">
+        {% endif %}
+        {% if metatags.twitter.image or image %}
+            {%- if metatags.twitter.image -%}
+                {% set content = metatags.twitter.image %}
+            {% else %}
+                {% set content = image %}
+            {%- endif -%}
+            {% set srcPath = asset(content, false) %}
+            <meta property="twitter:image" content="{{ srcPath }}">
+        {% endif %}
+    {% endif %}
+
+    {% if metatags.appleMobileWebApp %}
+        {% if metatags.appleMobileWebApp.capable %}
+            <meta name="apple-mobile-web-app-capable" content="{{ metatags.appleMobileWebApp.capable }}">
+        {% endif %}
+        {% if metatags.appleMobileWebApp.statusBarStyle %}
+            <meta name="apple-mobile-web-app-status-bar-style" content="{{ metatags.appleMobileWebApp.statusBarStyle }}">
+        {% endif %}
+        {% if metatags.appleMobileWebApp.title or title %}
+            {%- if metatags.appleMobileWebApp.title -%}
+                {% set content = metatags.appleMobileWebApp.title %}
+            {% else %}
+                {% set content = title %}
+            {%- endif -%}
+            <meta name="apple-mobile-web-app-title" content="{{ content }}">
+        {% endif %}
+    {% endif %}
+
+    {% if metatags.msapplication %}
+        {% if metatags.msapplication.tileColor %}
+            <meta name="msapplication-tileColor" content="{{ metatags.msapplication.tileColor }}">
+        {% endif %}
+        {% if metatags.msapplication.tileImage %}
+            {% set srcPath = asset(metatags.msapplicatio, falsen.tileImage) %}
+            <meta name="msapplication-tileImage" content="{{ srcPath }}">
+        {% endif %}
+        {% if metatags.msapplication.square70x70logo %}
+            {% set srcPath = asset(metatags.msapplicatio, falsen.square70x70logo) %}
+            <meta name="msapplication-square70x70logo" content="{{ srcPath }}">
+        {% endif %}
+        {% if metatags.msapplication.square150x150logo %}
+            {% set srcPath = asset(metatags.msapplicatio, falsen.square150x150logo) %}
+            <meta name="msapplication-square150x150logo" content="{{ srcPath }}">
+        {% endif %}
+        {% if metatags.msapplication.wide310x150logo %}
+            {% set srcPath = asset(metatags.msapplicatio, falsen.wide310x150logo) %}
+            <meta name="msapplication-square310x150logo" content="{{ srcPath }}">
+        {% endif %}
+        {% if metatags.msapplication.wide310x310logo %}
+            {% set srcPath = asset(metatags.msapplicatio, falsen.wide310x310logo) %}
+            <meta name="msapplication-square310x310logo" content="{{ srcPath }}">
+        {% endif %}
+        {% if metatags.msapplication.notification %}
+            <meta name="msapplication-notification" content="{{ metatags.msapplication.notification }}">
+        {% endif %}
+        {% if metatags.msapplication.config %}
+            <meta name="msapplication-config" content="{{ metatags.msapplication.config }}">
+        {% endif %}
+    {% endif %}
+
+    {% if metatags.themeColor %}
+        <meta name="theme-color" content="{{ metatags.themeColor }}">
+    {% endif %}
+
+    {% if metatags.applicationName or title %}
+        {%- if metatags.applicationName.title -%}
+            {% set content = appleMobileWebApp.applicationName.title %}
+        {% else %}
+            {% set content = title %}
+        {%- endif -%}
+        <meta name="application-name" content="{{ content }}">
+    {% endif %}
+
+    {# {% if metatags.formatDetection and (typeof metatags.formatDetection === 'string' or Object.values(metatags.formatDetection).some(function (value) {
+        return !value
+    })) %}
+        <meta name="format-detection" content="{{(typeof metatags.formatDetection === 'string' ? metatags.formatDetection : Object.entries(metatags.formatDetection).filter(function (entry) { return !entry[1] or entry[1] === 'no' }).map(function (entry) { return `${entry[0]}=no` }).join(','))}}">
+    {% endif %} #}
+{%- endmacro %}

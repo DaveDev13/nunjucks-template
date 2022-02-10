@@ -1,0 +1,181 @@
+<!--htmlhint tag-pair:false -->
+{% macro link(props) -%}
+    {% if props.appleTouch %}
+        {% if props.appleTouch.iconPrecomposed %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }}>
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed40x40 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed40x40, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="40x40">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed57x57 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed57x57, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="57x57">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed58x58 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed58x58, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="58x58">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed60x60 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed60x60, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="60x60">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed72x72 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed72x72, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="72x72">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed76x76 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed76x76, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="76x76">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed80x80 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed80x80, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="80x80">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed87x87 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed87x87, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="87x87">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed114x114 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed114x114, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="114x114">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed120x120 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed120x120, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="120x120">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed144x144 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed144x144, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="144x144">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed152x152 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed152x152, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="152x152">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed167x167 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed167x167, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="167x167">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed180x180 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed180x180, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="180x180">
+        {% endif %}
+        {% if props.appleTouch.iconPrecomposed1024x1024 %}
+                {% set srcPath = asset(props.appleTouch.iconPrecomposed1024x1024, false) %}
+            <link rel="apple-touch-icon-precomposed" href={{ srcPath }} sizes="1024x1024">
+        {% endif %}
+        {% if props.appleTouch.icon %}
+                {% set srcPath = asset(props.appleTouch.icon, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }}>
+        {% endif %}
+        {% if props.appleTouch.icon40x40 %}
+                {% set srcPath = asset(props.appleTouch.icon40x40, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="40x40">
+        {% endif %}
+        {% if props.appleTouch.icon57x57 %}
+                {% set srcPath = asset(props.appleTouch.icon57x57, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="57x57">
+        {% endif %}
+        {% if props.appleTouch.icon58x58 %}
+                {% set srcPath = asset(props.appleTouch.icon58x58, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="58x58">
+        {% endif %}
+        {% if props.appleTouch.icon60x60 %}
+                {% set srcPath = asset(props.appleTouch.icon60x60, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="60x60">
+        {% endif %}
+        {% if props.appleTouch.icon72x72 %}
+                {% set srcPath = asset(props.appleTouch.icon72x72, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="72x72">
+        {% endif %}
+        {% if props.appleTouch.icon76x76 %}
+                {% set srcPath = asset(props.appleTouch.icon76x76, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="76x76">
+        {% endif %}
+        {% if props.appleTouch.icon80x80 %}
+                {% set srcPath = asset(props.appleTouch.icon80x80, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="80x80">
+        {% endif %}
+        {% if props.appleTouch.icon87x87 %}
+                {% set srcPath = asset(props.appleTouch.icon87x87, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="87x87">
+        {% endif %}
+        {% if props.appleTouch.icon114x114 %}
+                {% set srcPath = asset(props.appleTouch.icon114x114, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="114x114">
+        {% endif %}
+        {% if props.appleTouch.icon120x120 %}
+                {% set srcPath = asset(props.appleTouch.icon120x120, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="120x120">
+        {% endif %}
+        {% if props.appleTouch.icon144x144 %}
+                {% set srcPath = asset(props.appleTouch.icon144x144, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="144x144">
+        {% endif %}
+        {% if props.appleTouch.icon152x152 %}
+                {% set srcPath = asset(props.appleTouch.icon152x152, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="152x152">
+        {% endif %}
+        {% if props.appleTouch.icon167x167 %}
+                {% set srcPath = asset(props.appleTouch.icon167x167, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="167x167">
+        {% endif %}
+        {% if props.appleTouch.icon180x180 %}
+                {% set srcPath = asset(props.appleTouch.icon180x180, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="180x180">
+        {% endif %}
+        {% if props.appleTouch.icon1024x1024 %}
+                {% set srcPath = asset(props.appleTouch.icon1024x1024, false) %}
+            <link rel="apple-touch-icon" href={{ srcPath }} sizes="1024x1024">
+        {% endif %}
+    {% endif %}
+
+    {% if props.icon %}
+        {% set srcPath = asset(props.icon, false) %}
+        <link rel="icon" href={{ srcPath }}>
+    {% endif %}
+
+    {% if props.icon16x16 %}
+        {% set srcPath = asset(props.icon16x16, false) %}
+        <link rel="icon" href={{ srcPath }} sizes="16x16">
+    {% endif %}
+
+    {% if props.icon32x32 %}
+        {% set srcPath = asset(props.icon32x32, false) %}
+        <link rel="icon" href={{ srcPath }} sizes="32x32">
+    {% endif %}
+
+    {% if props.icon96x96 %}
+        {% set srcPath = asset(props.icon96x96, false) %}
+        <link rel="icon" href={{ srcPath }} sizes="96x96">
+    {% endif %}
+
+    {% if props.icon128x128 %}
+        {% set srcPath = asset(props.icon128x128, false) %}
+        <link rel="icon" href={{ srcPath }} sizes="128x128">
+    {% endif %}
+
+    {% if props.icon192x192 %}
+        {% set srcPath = asset(props.icon192x192, false) %}
+        <link rel="icon" href={{ srcPath }} sizes="192x192">
+    {% endif %}
+
+    {% if props.icon194x194 %}
+        {% set srcPath = asset(props.icon194x194, false) %}
+        <link rel="icon" href={{ srcPath }} sizes="194x194">
+    {% endif %}
+
+    {% if props.icon196x196 %}
+        {% set srcPath = asset(props.icon196x196, false) %}
+        <link rel="icon" href={{ srcPath }} sizes="196x196">
+    {% endif %}
+
+    {% if props.manifest %}
+        <link rel="icon" href={{ props.manifest }}>
+    {% endif %}
+
+    {% if props.maskIcon and (props.maskIcon.href or props.maskIcon.color) %}
+        <link rel="icon" href={{ props.maskIcon.href }} color={{props.maskIcon.color}}>
+    {% endif %}
+{%- endmacro %}

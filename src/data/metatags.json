@@ -1,0 +1,105 @@
+{
+    "title": "простое название",
+    "description": "простое описание",
+    "keywords": "простое, описание",
+    "image": "/assets/images/share/main.jpg",
+    "metatags": {
+        "og": {
+            "description": null,
+            "image": null,
+            "imageType": null,
+            "imageWidth": null,
+            "imageHeight": null,
+            "imageAlt": null,
+            "locale": "ru_RU",
+            "title": null,
+            "type": "website",
+            "url": null
+        },
+
+        "twitter": {
+            "card": "summary_large_image",
+            "site": null,
+            "creator": null,
+            "title": null,
+            "description": null,
+            "image": null
+        },
+
+        "appleMobileWebApp": {
+            "capable": null,
+            "statusBarStyle": null,
+            "title": null
+        },
+
+        "msapplication": {
+            "tileColor": null,
+            "tileImage": null,
+            "notification": null,
+            "square70x70logo": null,
+            "square150x150logo": null,
+            "square310x310logo": null,
+            "wide310x150logo": null,
+            "config": null
+        },
+
+        "appleTouch": {
+            "icon": null,
+            "icon40x40": null,
+            "icon57x57": null,
+            "icon58x58": null,
+            "icon60x60": null,
+            "icon72x72": null,
+            "icon76x76": null,
+            "icon80x80": null,
+            "icon87x87": null,
+            "icon114x114": null,
+            "icon120x120": null,
+            "icon144x144": null,
+            "icon152x152": null,
+            "icon167x167": null,
+            "icon180x180": null,
+            "icon1024x1024": null,
+            "iconPrecomposed": null,
+            "iconPrecomposed40x40": null,
+            "iconPrecomposed57x57": null,
+            "iconPrecomposed58x58": null,
+            "iconPrecomposed60x60": null,
+            "iconPrecomposed72x72": null,
+            "iconPrecomposed76x76": null,
+            "iconPrecomposed80x80": null,
+            "iconPrecomposed87x87": null,
+            "iconPrecomposed114x114": null,
+            "iconPrecomposed120x120": null,
+            "iconPrecomposed144x144": null,
+            "iconPrecomposed152x152": null,
+            "iconPrecomposed167x167": null,
+            "iconPrecomposed180x180": null,
+            "iconPrecomposed1024x1024": null
+        },
+
+        "maskIcon": {
+            "href": null,
+            "color": null
+        },
+
+        "formatDetection": {
+            "address": true,
+            "date": true,
+            "email": true,
+            "telephone": true
+        },
+
+        "themeColor": null,
+        "applicationName": null,
+        "icon": null,
+        "icon16x16": null,
+        "icon32x32": null,
+        "icon96x96": null,
+        "icon128x128": null,
+        "icon192x192": null,
+        "icon194x194": null,
+        "icon196x196": null,
+        "manifest": null
+    }
+}

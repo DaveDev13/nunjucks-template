@@ -1,2 +1,5 @@
-build/**/*.js
-src/js/vendor/**/*
+*.*.js
+build
+config
+config.js
+node_modules

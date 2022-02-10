@@ -1,0 +1,12 @@
+{#
+    Макрос для вывода атрибута html, с возможностью опустить определенные атрибуты по имени
+#}
+{% macro htmlAttributes (attrs) %}
+    {% for name, value in attrs %}
+        {%- if value == "" or value == "true" %}
+            {{ name }}
+        {%- else %}
+            {{ name }}="{{ value }}"
+        {%- endif %}
+    {% endfor %}
+{% endmacro %}

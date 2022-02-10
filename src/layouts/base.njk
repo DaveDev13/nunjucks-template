@@ -1,0 +1,54 @@
+{% from 'layouts/macros/html-attributes.njk' import htmlAttributes %}
+{% from 'layouts/macros/meta.njk' import meta %}
+{% from 'layouts/macros/link.njk' import link %}
+{% from 'layouts/macros/assets.njk' import css, javascripts %}
+<!DOCTYPE html>
+<html dir="ltr" lang="{{ lang }}" class="has-hover no-js {{ htmlClassName }}" {{- htmlAttributes(htmlAttrs) }}>
+    <head>
+        {# Default meta tags #}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, shrink-to-fit=no"/>
+
+        <title>{{ title }}</title>
+        <meta name="description" content="{{ description }}" />
+        <meta name="keywords" content="{{ keywords }}"/>
+
+        {# Метатеги для соц сетей #}
+        {{- meta(title, description, keywords, image, metatags) -}}
+        {# Метатеги для браузерных фавиконок #}
+        {{- link(title, description, keywords, image, metatags) -}}
+
+        {% block preHeadScripts %}{% endblock %}
+
+        {# CSS #}
+        {# Вместо css в итоговом билде оказываются ссылки на файлы #}
+        {{ css('asset') }}
+        <!-- inject:css -->
+        <!-- endinject -->
+        {% block styles %}{% endblock %}
+    </head>
+    <body class="{{ bodyClassName }}" {{- htmlAttributes(bodyAttrs) }}>
+        {% block preBodyScripts %}{% endblock %}
+
+        <div class="site">
+            {% block body %}{% endblock %}
+        </div>
+
+        {# JS #}
+        <script>
+            if (!('IntersectionObserver' in window)) {
+                var script = document.createElement("script");
+                script.src = "https://raw.githubusercontent.com/w3c/IntersectionObserver/master/polyfill/intersection-observer.js";
+                document
+                    .getElementsByTagName('head')[0]
+                    .appendChild(script);
+            }
+        </script>
+        {# Вместо javascripts в итоговом билде оказываются ссылки на файлы #}
+        {{ javascripts('defer') }}
+        <!-- inject:js -->
+        <!-- endinject -->
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

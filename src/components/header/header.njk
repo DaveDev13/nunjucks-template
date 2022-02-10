@@ -1,0 +1,21 @@
+<header class="header">
+    <div class="header__container container">
+        <a href="{{ data.header.links.logo}}" class="header__logo">
+            {{ icon('logo-${lang}', {'width': '180', 'height': '35'}) | format | safe }}
+        </a>
+
+        <button class="header__burger btn js-burger" type="button">
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="header__menu">
+            <div class="header__list">
+                {% for object in data[lang].header.menu -%}
+                    <a href="{{object.url}}" class="header__link">{{object.name}}</a>
+                {%- endfor %}
+                <a href="mailto:{{data[lang].header.email}}" class="header__link">{{ data[lang].header.email }}</a>
+            </div>
+        </nav>
+    </div>
+</header>
